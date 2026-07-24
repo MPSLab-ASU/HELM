@@ -1,0 +1,27 @@
+[0;36m[16:32:55][0m   Running: C[ablations] Qwen/Qwen3-14B/helm
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+######################################################################
+  HELM Paper Experiments
+  Model      : Qwen/Qwen3-14B
+  Backends   : ['helm']
+  Output lens: [128]
+  N requests : 10
+  Feasibility: skip
+  Max decode : skip
+  Ablations  : ['batch_size', 'context_length', 'no_avx', 'no_kv_offload', 'cpu_threads']
+  LM eval    : disabled
+  Hardware   : 13th Gen Intel(R) Core(TM) i7-13620H  RAM=15GB  GPU=NVIDIA GeForce RTX 4060 Laptop GPU
+######################################################################
+
+
+======================================================================
+  SECTION 1: Latency Sweep  backends=['helm']  output_lens=[128]  N=10
+======================================================================
+
+────────────────────────────────────────────────────────────
+  Backend: HELM
+────────────────────────────────────────────────────────────
+[HELM] Loading model …
+Fetching 8 files:   0%|          | 0/8 [00:00<?, ?it/s]Fetching 8 files:  12%|█▎        | 1/8 [07:00<49:04, 420.58s/it]Fetching 8 files: 100%|██████████| 8/8 [07:00<00:00, 52.58s/it] 
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:02<00:17,  2.55s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:04<00:14,  2.43s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:07<00:13,  2.71s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:11<00:11,  2.98s/it][1;33m[16:41:21] ⚠[0m   C[ablations] Qwen/Qwen3-14B/helm exited with non-zero status (results may be partial)

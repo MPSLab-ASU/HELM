@@ -1,0 +1,13 @@
+{
+  "description": "Fig. 6 - Decode throughput vs. context length for Mistral-Nemo-12B on RTX 3090, with KV paging activating past the GPU KV budget. Throughput falls as host page traffic grows while peak GPU memory stays bounded near 23.4 GB; vLLM fails at KV allocation at 16K.",
+  "model": "mistralai/Mistral-Nemo-Instruct-2407",
+  "gpu": "RTX 3090",
+  "partition": "cpu(1u)+cuda(41u)",
+  "decode_tok_s_by_context": {"1024": 13.53, "2048": 9.52, "4096": 5.69, "8192": 1.46, "16384": 0.37},
+  "paging_onset": "past 4K context (KV GPU-resident with zero eviction up to 4K)",
+  "kv_evicted_to_host_gb_at_16k": 8.1,
+  "kv_prefetched_gb_cumulative_at_16k": 584,
+  "peak_gpu_memory_gb": {"at_1k": 22.3, "at_16k": 23.4},
+  "correctness": "Token-identical output with and without offload across 2048 generated tokens under greedy decoding (2048/2048 match); needle-in-a-haystack probe recalls the planted span under multi-gigabyte eviction at context lengths up to 65K.",
+  "produced_by": "experiments/longctx_paging.sh + experiments/longctx_paging_summarize.py"
+}

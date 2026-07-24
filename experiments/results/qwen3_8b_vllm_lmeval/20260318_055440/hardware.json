@@ -1,0 +1,10 @@
+{
+  "cuda_available": true,
+  "gpu_count": 1,
+  "gpu_name": "NVIDIA GeForce RTX 3090",
+  "gpu_memory_total_gb": 23.56854248046875,
+  "cpu_count": 128,
+  "ram_total_gb": 1007.6433258056641,
+  "platform": "Linux-6.8.0-85-generic-x86_64-with-glibc2.35",
+  "cpu_brand": "AMD EPYC 7H12 64-Core Processor"
+}

@@ -1,0 +1,4 @@
+# RESEARCH ONLY: not part of the production lock or security assessment.
+# Use Python 3.11 in an isolated environment; see README.md here.
+vllm==0.30.0
+deepspeed>=0.18.0

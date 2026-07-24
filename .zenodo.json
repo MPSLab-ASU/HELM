@@ -1,0 +1,40 @@
+{
+  "title": "HELM: Compiler-Guided Heterogeneous Execution for Large Language Models on Memory-Constrained Systems (Artifact)",
+  "description": "Artifact for the paper 'HELM: Compiler-Guided Heterogeneous Execution for Large Language Models on Memory-Constrained Systems'. Contains the HELM compiler and runtime (roofline-based CPU-GPU partition search, static per-device FX graphs, AVX2+F16C GEMV kernel, paged KV cache with streaming attention), benchmark harnesses for vLLM / Hugging Face Accelerate / DeepSpeed ZeRO-Inference / llama.cpp, single-command experiment drivers, a CPU-only test suite, canonical paper results in machine-readable form, and a validator comparing fresh runs against the paper (see ARTIFACT.md and REPRODUCING.md). Paper: IEEE TCAD, doi:10.1109/TCAD.2026.3729371.",
+  "upload_type": "software",
+  "license": "Apache-2.0",
+  "creators": [
+    {
+      "name": "Khedkar, Atharva"
+    },
+    {
+      "name": "Pandey, Shashwat"
+    },
+    {
+      "name": "Shrivastava, Aviral"
+    }
+  ],
+  "keywords": [
+    "large language models",
+    "compiler",
+    "heterogeneous computing",
+    "LLM inference",
+    "roofline model",
+    "KV cache offloading",
+    "artifact evaluation",
+    "CASES",
+    "ESWEEK"
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/MPSLab-ASU/HELM",
+      "resource_type": "software"
+    },
+    {
+      "relation": "isSupplementTo",
+      "identifier": "10.1109/TCAD.2026.3729371",
+      "resource_type": "publication-article"
+    }
+  ]
+}

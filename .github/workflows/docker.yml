@@ -1,0 +1,48 @@
+name: Docker image
+
+# Manual + Dockerfile-touching PRs only: the image build downloads multi-GB
+# PyTorch wheels, so it is not part of every-push CI.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - .github/workflows/docker.yml
+  pull_request:
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - .github/workflows/docker.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build-cpu:
+    name: Build image (CPU wheels) & run tests inside
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build (CPU torch wheels keep the CI image small; GHA layer cache)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          build-args: TORCH_INDEX=cpu
+          tags: helm:ci
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke + tests + results validation inside one container
+        run: |
+          docker run --rm helm:ci bash -ec '
+            python -c "import helm, torch; print(\"torch\", torch.__version__)"
+            helm --help > /dev/null && echo "helm --help OK"
+            pytest tests/ -q -p no:cacheprovider
+            python results/validate_results.py
+          '

@@ -1,0 +1,34 @@
+{
+  "description": "Fig. 5 - Maximum supported output length per backend (log2 scale). Values are max output tokens before OOM; strings mark the first failing cause: WEIGHT_OOM = weight-load OOM (W), FAIL_INIT = backend initialization failure (I), KV_OOM = KV-allocation OOM (KV), FOOTPRINT = model footprint exceeding combined CPU+GPU memory (F). Cells the paper reports only graphically (bar heights without an explicit number in the text or caption) are marked NOT_REPORTED here; the authoritative values are the bars in Fig. 5 of the paper and the raw outputs of the experiments/paper_bench.py max-decode probe (section F of run_paper_experiments.sh).",
+  "rtx4060_8gb": {
+    "Qwen3-4B":  {"HELM": 8192,  "Accelerate": 1024, "DeepSpeed": "FAIL_INIT", "vLLM": "FAIL_INIT"},
+    "Qwen3-8B":  {"HELM": 4096,  "Accelerate": 128,  "DeepSpeed": "FAIL_INIT", "vLLM": "FAIL_INIT"},
+    "Qwen3-14B": {"HELM": "FOOTPRINT", "Accelerate": "FOOTPRINT", "DeepSpeed": "FOOTPRINT", "vLLM": "FOOTPRINT"},
+    "Qwen3-32B": {"HELM": "FOOTPRINT", "Accelerate": "FOOTPRINT", "DeepSpeed": "FOOTPRINT", "vLLM": "FOOTPRINT"}
+  },
+  "rtx3090_24gb": {
+    "Qwen3-4B":  {"HELM": 32768, "Accelerate": "NOT_REPORTED", "DeepSpeed": "NOT_REPORTED", "vLLM": 8192},
+    "Qwen3-8B":  {"HELM": 32768, "Accelerate": "NOT_REPORTED", "DeepSpeed": "NOT_REPORTED", "vLLM": 8192},
+    "Qwen3-14B": {"HELM": 32768, "Accelerate": 128,  "DeepSpeed": "FAIL_INIT", "vLLM": "KV_OOM"},
+    "Qwen3-32B": {"HELM": 4096,  "Accelerate": "KV_OOM", "DeepSpeed": "FAIL_INIT", "vLLM": "WEIGHT_OOM"}
+  },
+  "l40s_48gb": {
+    "Qwen3-4B":  {"HELM": 32768, "Accelerate": "NOT_REPORTED", "DeepSpeed": "NOT_REPORTED", "vLLM": 32768},
+    "Qwen3-8B":  {"HELM": 32768, "Accelerate": "NOT_REPORTED", "DeepSpeed": "NOT_REPORTED", "vLLM": 32768},
+    "Qwen3-14B": {"HELM": 32768, "Accelerate": "NOT_REPORTED", "DeepSpeed": "NOT_REPORTED", "vLLM": 32768},
+    "Qwen3-32B": {"HELM": 8192,  "Accelerate": 1024,  "DeepSpeed": "FAIL_INIT", "vLLM": "WEIGHT_OOM"}
+  },
+  "headline_ratios": {
+    "rtx4060_Qwen3-4B": 8.0,
+    "rtx4060_Qwen3-8B": 32.0,
+    "rtx3090_Qwen3-4B": 4.0,
+    "rtx3090_Qwen3-8B": 4.0,
+    "rtx3090_Qwen3-14B": 256.0,
+    "l40s_Qwen3-4B": 1.0,
+    "l40s_Qwen3-8B": 1.0,
+    "l40s_Qwen3-14B": 1.0,
+    "l40s_Qwen3-32B": 8.0,
+    "note": "Ratio = HELM max output tokens / strongest feasible baseline. Geometric mean over the feasible Qwen3 model x GPU pairs (a pair is feasible when at least one baseline produces output; Qwen3-32B on RTX 3090 has no baseline long-output point and is excluded) is 5.9x; the maximum is 256x (Qwen3-14B on RTX 3090: HELM 32K vs. Accelerate 128)."
+  },
+  "produced_by": "experiments/paper_bench.py max_decode_length probe, i.e. section F of experiments/run_paper_experiments.sh (run with SECTIONS=F; off by default)"
+}

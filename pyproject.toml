@@ -1,0 +1,76 @@
+[project]
+name = "helm"
+version = "1.1.0"
+description = "HELM: compiler-guided heterogeneous CPU+GPU execution for large language models"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch==2.13.0",
+    "torchvision==0.28.0",
+    "psutil",
+    "numpy",
+    "packaging",
+    "transformers==5.17.0",
+    "accelerate>=1.15.0",
+    "setuptools>=84.0.0",  # fixed sdist exclusion handling; also required by torch
+    "ninja",               # torch.utils.cpp_extension needs it to JIT the AVX2 CPU kernel
+]
+
+[project.urls]
+Homepage = "https://github.com/MPSLab-ASU/HELM"
+Repository = "https://github.com/MPSLab-ASU/HELM"
+Issues = "https://github.com/MPSLab-ASU/HELM/issues"
+Archive = "https://doi.org/10.5281/zenodo.21548044"
+
+[project.optional-dependencies]
+# Paper baselines/evaluation live in research/ (not production extras).
+dev = [
+    "pytest>=8.0",
+    "pytest-xdist",
+    "matplotlib>=3.7",
+    "ninja",        # torch.utils.cpp_extension needs it to JIT the AVX2 kernel
+    "py-cpuinfo",   # L3-cache detection for the device profiler (else conservative default)
+]
+
+[project.scripts]
+helm = "helm.cli:main"
+
+[tool.uv]
+package = true
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu130" }]
+torchvision = [{ index = "pytorch-cu130" }]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["helm*"]
+
+[tool.setuptools.package-data]
+"helm.kernels" = ["*.cpp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
+
+# Kept identical to [project.optional-dependencies].dev so `uv sync` and
+# `pip install -e ".[dev]"` produce the same environment.
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-xdist",
+    "matplotlib>=3.7",
+    "ninja",        # torch.utils.cpp_extension needs it to JIT the AVX2 kernel
+    "py-cpuinfo",   # L3-cache detection for the device profiler (else conservative default)
+]
+
+[build-system]
+requires = ["setuptools>=84.0.0"]
+build-backend = "setuptools.build_meta"

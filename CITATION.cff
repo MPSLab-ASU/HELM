@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: >-
+  If you use HELM in your research, please cite the paper below.
+title: "HELM: Compiler-Guided Heterogeneous Execution for Large Language Models on Memory-Constrained Systems"
+type: software
+authors:
+  - family-names: Khedkar
+    given-names: Atharva
+  - family-names: Pandey
+    given-names: Shashwat
+  - family-names: Shrivastava
+    given-names: Aviral
+repository-code: "https://github.com/MPSLab-ASU/HELM"
+doi: 10.5281/zenodo.21548044
+license: Apache-2.0
+version: 1.1.0
+keywords:
+  - large language models
+  - compiler
+  - heterogeneous computing
+  - LLM inference
+  - roofline model
+  - KV cache offloading
+preferred-citation:
+  type: article
+  title: "HELM: Compiler-Guided Heterogeneous Execution for Large Language Models on Memory-Constrained Systems"
+  authors:
+    - family-names: Khedkar
+      given-names: Atharva
+    - family-names: Pandey
+      given-names: Shashwat
+    - family-names: Shrivastava
+      given-names: Aviral
+  journal: "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems"
+  year: 2026
+  start: 1
+  end: 1
+  doi: 10.1109/TCAD.2026.3729371
+  url: "https://ieeexplore.ieee.org/document/11673279"

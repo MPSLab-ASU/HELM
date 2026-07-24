@@ -1,0 +1,211 @@
+[0;36m[16:17:21][0m   Running: C[ablations] Qwen/Qwen3-8B/helm
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+######################################################################
+  HELM Paper Experiments
+  Model      : Qwen/Qwen3-8B
+  Backends   : ['helm']
+  Output lens: [128]
+  N requests : 10
+  Feasibility: skip
+  Max decode : skip
+  Ablations  : ['batch_size', 'context_length', 'no_avx', 'no_kv_offload', 'cpu_threads']
+  LM eval    : disabled
+  Hardware   : 13th Gen Intel(R) Core(TM) i7-13620H  RAM=15GB  GPU=NVIDIA GeForce RTX 4060 Laptop GPU
+######################################################################
+
+
+======================================================================
+  SECTION 1: Latency Sweep  backends=['helm']  output_lens=[128]  N=10
+======================================================================
+
+────────────────────────────────────────────────────────────
+  Backend: HELM
+────────────────────────────────────────────────────────────
+[HELM] Loading model …
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:04<00:16,  4.24s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:07<00:11,  3.95s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:11<00:07,  3.70s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:15<00:03,  3.82s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:16<00:00,  2.69s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:16<00:00,  3.22s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+W0316 16:17:46.184000 43395 .venv/lib/python3.10/site-packages/torch/fx/_symbolic_trace.py:53] is_fx_tracing will return true for both fx.symbolic_trace and torch.export. Please use is_fx_tracing_symbolic_tracing() for specifically fx.symbolic_trace or torch.compiler.is_compiling() for specifically torch.export/compile.
+[HELM] Tracing and compiling (auto partition mode) …
+
+[3] --- Capturing FX Graph ---
+  HF tracing failed: code: varnames is too small
+  Falling back to custom HelmTracer with leaf modules
+  Captured FX Graph with 177 nodes
+[HELM] device_profiler [cpu]: decode=0.00 TFLOPS  prefill=0.00 TFLOPS  mem_bw=43.7 GB/s  capacity=16.45GB
+[HELM] device_profiler [cuda]: decode=0.28 TFLOPS  prefill=25.56 TFLOPS  mem_bw=225.0 GB/s  capacity=8.18GB
+[HELM] partition units: 38 units, total params=16.38GB
+  unit 0 (embedding layer=None): param=1245MB
+  unit 1 (transformer_block layer=0): param=386MB
+  unit 2 (transformer_block layer=1): param=386MB
+  unit 3 (transformer_block layer=2): param=386MB
+  unit 4 (transformer_block layer=3): param=386MB
+  unit 5 (transformer_block layer=4): param=386MB
+  unit 6 (transformer_block layer=5): param=386MB
+  unit 7 (transformer_block layer=6): param=386MB
+  unit 8 (transformer_block layer=7): param=386MB
+  unit 9 (transformer_block layer=8): param=386MB
+  unit 10 (transformer_block layer=9): param=386MB
+  unit 11 (transformer_block layer=10): param=386MB
+  unit 12 (transformer_block layer=11): param=386MB
+  unit 13 (transformer_block layer=12): param=386MB
+  unit 14 (transformer_block layer=13): param=386MB
+  unit 15 (transformer_block layer=14): param=386MB
+  unit 16 (transformer_block layer=15): param=386MB
+  unit 17 (transformer_block layer=16): param=386MB
+  unit 18 (transformer_block layer=17): param=386MB
+  unit 19 (transformer_block layer=18): param=386MB
+  unit 20 (transformer_block layer=19): param=386MB
+  unit 21 (transformer_block layer=20): param=386MB
+  unit 22 (transformer_block layer=21): param=386MB
+  unit 23 (transformer_block layer=22): param=386MB
+  unit 24 (transformer_block layer=23): param=386MB
+  unit 25 (transformer_block layer=24): param=386MB
+  unit 26 (transformer_block layer=25): param=386MB
+  unit 27 (transformer_block layer=26): param=386MB
+  unit 28 (transformer_block layer=27): param=386MB
+  unit 29 (transformer_block layer=28): param=386MB
+  unit 30 (transformer_block layer=29): param=386MB
+  unit 31 (transformer_block layer=30): param=386MB
+  unit 32 (transformer_block layer=31): param=386MB
+  unit 33 (transformer_block layer=32): param=386MB
+  unit 34 (transformer_block layer=33): param=386MB
+  unit 35 (transformer_block layer=34): param=386MB
+  unit 36 (transformer_block layer=35): param=386MB
+  unit 37 (output layer=None): param=1245MB
+[HELM] StrategySelector objective='decode_latency' — 17 feasible plan(s):
+  [stage0@cpu(21u), stage1@cuda(17u)] decode=32943.2ms prefill=121319ms mem=9621MB ← best
+  [stage0@cpu(22u), stage1@cuda(16u)] decode=34586.9ms prefill=127381ms mem=10026MB
+  [stage0@cpu(23u), stage1@cuda(15u)] decode=36230.7ms prefill=133444ms mem=10431MB
+  [stage0@cpu(24u), stage1@cuda(14u)] decode=37874.5ms prefill=139507ms mem=10836MB
+  [stage0@cpu(25u), stage1@cuda(13u)] decode=39518.3ms prefill=145569ms mem=11242MB
+  [stage0@cpu(26u), stage1@cuda(12u)] decode=41162.1ms prefill=151632ms mem=11647MB
+  [stage0@cpu(27u), stage1@cuda(11u)] decode=42805.9ms prefill=157694ms mem=12052MB
+  [stage0@cpu(28u), stage1@cuda(10u)] decode=44449.7ms prefill=163757ms mem=12457MB
+  [stage0@cpu(29u), stage1@cuda(9u)] decode=46093.5ms prefill=169819ms mem=12862MB
+  [stage0@cpu(30u), stage1@cuda(8u)] decode=47737.3ms prefill=175882ms mem=13268MB
+  [stage0@cpu(31u), stage1@cuda(7u)] decode=49381.1ms prefill=181945ms mem=13673MB
+  [stage0@cpu(32u), stage1@cuda(6u)] decode=51024.9ms prefill=188007ms mem=14078MB
+  [stage0@cpu(33u), stage1@cuda(5u)] decode=52668.7ms prefill=194070ms mem=14483MB
+  [stage0@cpu(34u), stage1@cuda(4u)] decode=54312.5ms prefill=200132ms mem=14889MB
+  [stage0@cpu(35u), stage1@cuda(3u)] decode=55956.3ms prefill=206195ms mem=15294MB
+  [stage0@cpu(36u), stage1@cuda(2u)] decode=57600.0ms prefill=212258ms mem=15699MB
+  [stage0@cpu(37u), stage1@cuda(1u)] decode=59243.8ms prefill=218320ms mem=16104MB
+[HELM] auto partition: stage 0 → cpu  units 0–19  params=8.96GB
+[HELM] auto partition: stage 1 → cuda  units 20–35  params=7.42GB
+[HELM] Compilation done in 58.3s
+[HELM] Stage plan: stage0@cpu(21u), stage1@cuda(17u)
+[HELM] Cost model: decode=0.0ms prefill=0ms
+[HELM] Stage weights pre-positioned: GPU 7.43 GB allocated
+[HELM] Patched 140 nn.Linear(s) on CPU stage(s) with AVX2+F16C fp16 GEMV kernel
+[HELM] Stage weights pre-positioned: GPU 7.43 GB allocated
+[HELM] Runtime ready.
+
+  output_len=128 …
+  [helm] output=128  (10/10 succeeded)
+    TTFT    : p50=2773.6ms  p95=3606.4ms  p99=4045.5ms  mean=2883.5ms
+    Decode  : p50=259.6ms/tok  p95=272.8ms/tok  p99=276.4ms/tok
+    E2E     : p50=36109ms  p95=38060ms  p99=38350ms
+    Tok/s   : 3.5  |  decode tok/s: 3.9
+    Memory  : GPU=7096MB  CPU=9801MB
+    Compiler: 58.3s  plan=[stage0@cpu(21u), stage1@cuda(17u)]
+    CostModel: decode=0.0ms  prefill=0ms
+    CostModel error: 100.0% vs measured 259.7ms/tok
+
+======================================================================
+  SECTION 2: Ablations  ['batch_size', 'context_length', 'no_avx', 'no_kv_offload', 'cpu_threads']
+======================================================================
+
+  ── Ablation: batch_size ──
+  batch=1 …
+[HELM] Loading model …
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:04<00:16,  4.19s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:08<00:12,  4.03s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:11<00:07,  3.71s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:15<00:03,  3.70s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:15<00:00,  2.65s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:15<00:00,  3.18s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+[HELM] Tracing and compiling (auto partition mode) …
+
+[3] --- Capturing FX Graph ---
+  HF tracing failed: Qwen3ForCausalLM.forward() takes from 1 to 10 positional arguments but 11 were given
+  Falling back to custom HelmTracer with leaf modules
+  Captured FX Graph with 177 nodes
+[HELM] device_profiler [cpu]: decode=0.00 TFLOPS  prefill=0.00 TFLOPS  mem_bw=43.7 GB/s  capacity=16.45GB
+[HELM] device_profiler [cuda]: decode=0.28 TFLOPS  prefill=25.56 TFLOPS  mem_bw=225.0 GB/s  capacity=8.18GB
+[HELM] partition units: 38 units, total params=16.38GB
+  unit 0 (embedding layer=None): param=1245MB
+  unit 1 (transformer_block layer=0): param=386MB
+  unit 2 (transformer_block layer=1): param=386MB
+  unit 3 (transformer_block layer=2): param=386MB
+  unit 4 (transformer_block layer=3): param=386MB
+  unit 5 (transformer_block layer=4): param=386MB
+  unit 6 (transformer_block layer=5): param=386MB
+  unit 7 (transformer_block layer=6): param=386MB
+  unit 8 (transformer_block layer=7): param=386MB
+  unit 9 (transformer_block layer=8): param=386MB
+  unit 10 (transformer_block layer=9): param=386MB
+  unit 11 (transformer_block layer=10): param=386MB
+  unit 12 (transformer_block layer=11): param=386MB
+  unit 13 (transformer_block layer=12): param=386MB
+  unit 14 (transformer_block layer=13): param=386MB
+  unit 15 (transformer_block layer=14): param=386MB
+  unit 16 (transformer_block layer=15): param=386MB
+  unit 17 (transformer_block layer=16): param=386MB
+  unit 18 (transformer_block layer=17): param=386MB
+  unit 19 (transformer_block layer=18): param=386MB
+  unit 20 (transformer_block layer=19): param=386MB
+  unit 21 (transformer_block layer=20): param=386MB
+  unit 22 (transformer_block layer=21): param=386MB
+  unit 23 (transformer_block layer=22): param=386MB
+  unit 24 (transformer_block layer=23): param=386MB
+  unit 25 (transformer_block layer=24): param=386MB
+  unit 26 (transformer_block layer=25): param=386MB
+  unit 27 (transformer_block layer=26): param=386MB
+  unit 28 (transformer_block layer=27): param=386MB
+  unit 29 (transformer_block layer=28): param=386MB
+  unit 30 (transformer_block layer=29): param=386MB
+  unit 31 (transformer_block layer=30): param=386MB
+  unit 32 (transformer_block layer=31): param=386MB
+  unit 33 (transformer_block layer=32): param=386MB
+  unit 34 (transformer_block layer=33): param=386MB
+  unit 35 (transformer_block layer=34): param=386MB
+  unit 36 (transformer_block layer=35): param=386MB
+  unit 37 (output layer=None): param=1245MB
+[HELM] StrategySelector objective='decode_latency' — 17 feasible plan(s):
+  [stage0@cpu(21u), stage1@cuda(17u)] decode=32943.2ms prefill=121319ms mem=9621MB ← best
+  [stage0@cpu(22u), stage1@cuda(16u)] decode=34586.9ms prefill=127381ms mem=10026MB
+  [stage0@cpu(23u), stage1@cuda(15u)] decode=36230.7ms prefill=133444ms mem=10431MB
+  [stage0@cpu(24u), stage1@cuda(14u)] decode=37874.5ms prefill=139507ms mem=10836MB
+  [stage0@cpu(25u), stage1@cuda(13u)] decode=39518.3ms prefill=145569ms mem=11242MB
+  [stage0@cpu(26u), stage1@cuda(12u)] decode=41162.1ms prefill=151632ms mem=11647MB
+  [stage0@cpu(27u), stage1@cuda(11u)] decode=42805.9ms prefill=157694ms mem=12052MB
+  [stage0@cpu(28u), stage1@cuda(10u)] decode=44449.7ms prefill=163757ms mem=12457MB
+  [stage0@cpu(29u), stage1@cuda(9u)] decode=46093.5ms prefill=169819ms mem=12862MB
+  [stage0@cpu(30u), stage1@cuda(8u)] decode=47737.3ms prefill=175882ms mem=13268MB
+  [stage0@cpu(31u), stage1@cuda(7u)] decode=49381.1ms prefill=181945ms mem=13673MB
+  [stage0@cpu(32u), stage1@cuda(6u)] decode=51024.9ms prefill=188007ms mem=14078MB
+  [stage0@cpu(33u), stage1@cuda(5u)] decode=52668.7ms prefill=194070ms mem=14483MB
+  [stage0@cpu(34u), stage1@cuda(4u)] decode=54312.5ms prefill=200132ms mem=14889MB
+  [stage0@cpu(35u), stage1@cuda(3u)] decode=55956.3ms prefill=206195ms mem=15294MB
+  [stage0@cpu(36u), stage1@cuda(2u)] decode=57600.0ms prefill=212258ms mem=15699MB
+  [stage0@cpu(37u), stage1@cuda(1u)] decode=59243.8ms prefill=218320ms mem=16104MB
+[HELM] auto partition: stage 0 → cpu  units 0–19  params=8.96GB
+[HELM] auto partition: stage 1 → cuda  units 20–35  params=7.42GB
+[HELM] Compilation done in 1.4s
+[HELM] Stage plan: stage0@cpu(21u), stage1@cuda(17u)
+[HELM] Cost model: decode=0.0ms prefill=0ms
+[HELM] Stage weights pre-positioned: GPU 7.43 GB allocated
+[HELM] Patched 140 nn.Linear(s) on CPU stage(s) with AVX2+F16C fp16 GEMV kernel
+[HELM] Stage weights pre-positioned: GPU 7.43 GB allocated
+[HELM] Runtime ready.
+  [helm] output=128  (9/10 succeeded)
+    TTFT    : p50=2484.6ms  p95=3615.6ms  p99=4060.9ms  mean=2701.8ms
+    Decode  : p50=320.6ms/tok  p95=359.2ms/tok  p99=359.3ms/tok
+    E2E     : p50=43570ms  p95=48392ms  p99=48411ms
+    Tok/s   : 2.9  |  decode tok/s: 3.1
+    Memory  : GPU=7159MB  CPU=9566MB
+    Compiler: 1.4s  plan=[stage0@cpu(21u), stage1@cuda(17u)]
+    CostModel: decode=0.0ms  prefill=0ms
+    CostModel error: 100.0% vs measured 323.9ms/tok
+  batch=2 …
+[HELM] Loading model …
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:04<00:16,  4.19s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:08<00:11,  3.99s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:11<00:07,  3.61s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:15<00:03,  3.88s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:16<00:00,  2.72s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:16<00:00,  3.23s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+[1;33m[16:32:54] ⚠[0m   C[ablations] Qwen/Qwen3-8B/helm exited with non-zero status (results may be partial)

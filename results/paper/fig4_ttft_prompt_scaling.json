@@ -1,0 +1,12 @@
+{
+  "description": "Fig. 4 - TTFT (p50, seconds) vs. padded prompt length for Qwen3-32B on RTX 3090 at the auto-selected cpu(43u)+cuda(23u) partition (embedding plus first 42 of 64 transformer blocks on CPU), 32 CPU threads, n=5 per point.",
+  "model": "Qwen/Qwen3-32B",
+  "gpu": "RTX 3090",
+  "partition": "cpu(43u)+cuda(23u)",
+  "cpu_threads": 32,
+  "n_per_point": 5,
+  "prompt_lengths": [128, 256, 512, 1024, 2048, 4096],
+  "ttft_p50_s": {"128": 11.7, "4096": 243.1},
+  "claim": "TTFT scales 20.8x over the 32x input-length range: prefill on a heavy CPU partition grows with prompt length, not flat.",
+  "produced_by": "experiments/ttft_prompt_scaling.sh + experiments/ttft_prompt_scaling_summarize.py"
+}

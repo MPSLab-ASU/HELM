@@ -1,0 +1,48 @@
+name: Artifact package
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Build & verify artifact tarball
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build tarball
+        run: OUT="$PWD/helm-artifact.tar.gz" bash make_package.sh
+
+      - name: Verify package contents
+        # The tarball is `git archive HEAD`, so require its listing to contain
+        # every tracked file - exhaustive and rename-proof, unlike a hand list.
+        run: |
+          set -e
+          tar -tzf helm-artifact.tar.gz | sed 's,^HELM/,,' | sed '/\/$/d' | sort > /tmp/in_tar
+          git ls-files | sort > /tmp/tracked
+          missing="$(comm -23 /tmp/tracked /tmp/in_tar)"
+          if [ -n "$missing" ]; then
+            echo "TRACKED FILES MISSING FROM PACKAGE:"; echo "$missing"; exit 1
+          fi
+          echo "package contains all $(wc -l < /tmp/tracked) tracked files"
+
+      - name: Checksums
+        run: sha256sum helm-artifact.tar.gz | tee SHA256SUMS
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: helm-artifact
+          path: |
+            helm-artifact.tar.gz
+            SHA256SUMS
+          # Long retention only for tagged (release/Zenodo) builds.
+          retention-days: ${{ startsWith(github.ref, 'refs/tags/') && 90 || 14 }}
+          if-no-files-found: error

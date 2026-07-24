@@ -1,0 +1,108 @@
+{
+  "config": {
+    "model": "Qwen/Qwen3-14B",
+    "backends": [
+      "vllm"
+    ],
+    "base_prompt": "transformer-based language models and their applications in natural language processing",
+    "input_len": 128,
+    "pad_to_input_len": true,
+    "output_lens": [
+      64
+    ],
+    "num_requests": 1,
+    "num_warmup": 1,
+    "batch_size": 1,
+    "dtype": "float16",
+    "timeout": 3600,
+    "no_kv_offload": false,
+    "cpu_threads": 8,
+    "cpu_layers": null,
+    "vllm_gpu_util": 0.9,
+    "throughput_concurrency": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "ablations": [
+      "batch_size",
+      "context_length",
+      "no_kv_offload"
+    ],
+    "skip_latency_sweep": true,
+    "skip_feasibility": false,
+    "skip_max_decode": true,
+    "max_decode_candidates": [
+      128,
+      512,
+      1024,
+      2048,
+      3072,
+      4096,
+      5120,
+      6144,
+      7168,
+      8192,
+      9216,
+      10240,
+      11264,
+      12288,
+      13312,
+      14336,
+      15360,
+      16384,
+      17408,
+      18432,
+      19456,
+      20480,
+      21504,
+      22528,
+      23552,
+      24576,
+      25600,
+      26624,
+      27648,
+      28672,
+      29696,
+      30720,
+      31744,
+      32768
+    ],
+    "no_lm_eval": true,
+    "lm_eval_tasks": [
+      "mmlu",
+      "hellaswag",
+      "arc_easy"
+    ],
+    "lm_eval_limit": 200,
+    "output_dir": "experiments/results/20260709_151949/Qwen-Qwen3-14B/vllm/E_feasibility"
+  },
+  "hardware": {
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 3090",
+    "gpu_count": 2,
+    "gpu_memory_total_mb": 24124.1875,
+    "cpu_count_physical": 12,
+    "cpu_count_logical": 24,
+    "ram_total_gb": 30.36534881591797,
+    "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+    "cpu_brand": "AMD Ryzen 9 9900X 12-Core Processor"
+  },
+  "feasibility": {
+    "vllm": {
+      "backend": "vllm",
+      "fits_in_memory": false,
+      "peak_gpu_mb": 0.0,
+      "peak_cpu_mb": 0.0,
+      "gpu_free_mb": 0.0,
+      "status": "error",
+      "error_msg": "setup() returned False"
+    }
+  },
+  "max_decode_length": {},
+  "latency_sweep": {},
+  "throughput": {},
+  "ablations": {},
+  "lm_eval": {}
+}

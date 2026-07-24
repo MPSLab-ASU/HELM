@@ -1,0 +1,22 @@
+{
+  "threads=1": {
+    "tok_per_s": 1.1378952515350669,
+    "n_threads": 1
+  },
+  "threads=2": {
+    "tok_per_s": 2.006509601217364,
+    "n_threads": 2
+  },
+  "threads=4": {
+    "tok_per_s": 2.7274277516346506,
+    "n_threads": 4
+  },
+  "threads=8": {
+    "tok_per_s": 2.509443253757706,
+    "n_threads": 8
+  },
+  "threads=16": {
+    "tok_per_s": 1.015376793369143,
+    "n_threads": 16
+  }
+}

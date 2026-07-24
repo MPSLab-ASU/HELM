@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint & script syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Ruff (critical rules - syntax errors and undefined names)
+        run: |
+          pip install 'ruff==0.15.21'
+          ruff check helm tests experiments results --select E9,F63,F7,F82
+      - name: Shell script syntax (bash -n)
+        run: |
+          set -e
+          for f in *.sh experiments/*.sh; do
+            echo "bash -n $f"
+            bash -n "$f"
+          done
+      - name: No tracked file may match an ignore rule
+        # A deny-all gitignore pattern once silently kept two source files out
+        # of the repo while their tests were tracked; this guards the invariant
+        # that everything tracked is visible to normal git tooling.
+        run: |
+          bad="$(git ls-files -ci --exclude-standard)"
+          if [ -n "$bad" ]; then
+            echo "Tracked files shadowed by .gitignore rules:"; echo "$bad"; exit 1
+          fi
+
+  validate-paper-results:
+    name: Validate canonical paper results
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Self-check committed results (stdlib only, no GPU)
+        run: python results/validate_results.py
+      - name: Cross-check committed RTX 4060 raw run against Table II
+        run: |
+          python results/validate_results.py \
+            --check-run experiments/results/rtx4060_in128_rerun/Qwen-Qwen3-4B/helm/A_latency/paper_results.json \
+            --gpu "RTX 4060" --model Qwen3-4B
+          python results/validate_results.py \
+            --check-run experiments/results/rtx4060_in128_rerun/Qwen-Qwen3-8B/helm/A_latency/paper_results.json \
+            --gpu "RTX 4060" --model Qwen3-8B
+
+  test:
+    name: Tests (CPU-only, py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install CPU-only PyTorch
+        run: |
+          pip install torch==2.13.0 torchvision==0.28.0 \
+            --index-url https://download.pytorch.org/whl/cpu
+      - name: Install HELM (editable, dev extras)
+        # ninja: lets the AVX2+F16C kernel JIT-compile so its numeric tests run
+        run: pip install -e ".[dev]" ninja
+      - name: CLI smoke test
+        run: |
+          python -c "import helm; import helm.cli; import helm.compiler.compiler; import helm.runtime.pipeline_runtime"
+          helm --help
+      - name: Run test suite (GPU tests auto-skip)
+        run: pytest tests/ -q -p no:cacheprovider

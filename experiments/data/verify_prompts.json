@@ -1,0 +1,22 @@
+[
+  "Explain in plain English how a transformer language model generates text token by token.",
+  "What is the difference between prefill and decode in autoregressive inference?",
+  "Summarise the trade-offs between weight offloading and KV cache offloading.",
+  "Translate the sentence 'She didn't wake up on time' into Spanish and explain the tense choice.",
+  "Write a short Python function that returns the nth Fibonacci number using memoization.",
+  "Briefly explain why GPU memory bandwidth, not FLOPs, often bottlenecks LLM decode.",
+  "List three concrete reasons to prefer attention paging over a contiguous KV cache.",
+  "What does it mean when a model has tied input and output embeddings?",
+  "Describe the difference between bf16 and fp16 with respect to dynamic range and training stability.",
+  "How does grouped-query attention reduce KV-cache memory compared to full multi-head attention?",
+  "What problem does speculative decoding try to solve, and what assumption makes it work?",
+  "Walk through the math: how many KV-cache bytes does a 7B model with 32 layers, 32 heads of dim 128 use per token in fp16?",
+  "Compare RoPE and ALiBi positional encodings in one short paragraph.",
+  "What is the difference between == and .equals() in Java?",
+  "Give a 4-sentence explanation of CUDA streams and why they enable overlap.",
+  "Why might torch.compile slow down the first inference call even though it speeds up later calls?",
+  "What is the difference between an embedding layer and a linear layer mathematically?",
+  "Describe one concrete way to reduce time-to-first-token for a 32B model on a 24 GB GPU.",
+  "Explain what FlashAttention does at a high level and why it is faster than naive attention.",
+  "If a model's perplexity on a held-out set is 7.2, what does that number intuitively mean?"
+]

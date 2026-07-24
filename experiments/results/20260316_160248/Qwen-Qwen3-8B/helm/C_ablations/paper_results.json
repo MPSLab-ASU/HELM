@@ -1,0 +1,95 @@
+{
+  "config": {
+    "model": "Qwen/Qwen3-8B",
+    "backends": [
+      "helm"
+    ],
+    "base_prompt": "transformer-based language models and their applications in natural language processing",
+    "input_len": 64,
+    "output_lens": [
+      128
+    ],
+    "num_requests": 10,
+    "batch_size": 1,
+    "dtype": "float16",
+    "timeout": 300,
+    "no_kv_offload": false,
+    "cpu_threads": 8,
+    "vllm_gpu_util": 0.9,
+    "throughput_concurrency": [],
+    "ablations": [
+      "batch_size",
+      "context_length",
+      "no_avx",
+      "no_kv_offload",
+      "cpu_threads"
+    ],
+    "skip_latency_sweep": false,
+    "skip_feasibility": true,
+    "skip_max_decode": true,
+    "max_decode_candidates": [
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192
+    ],
+    "no_lm_eval": true,
+    "lm_eval_tasks": [
+      "mmlu",
+      "hellaswag",
+      "arc_easy"
+    ],
+    "lm_eval_limit": 200,
+    "output_dir": "experiments/results/20260316_160248/Qwen-Qwen3-8B/helm/C_ablations"
+  },
+  "hardware": {
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_memory_total_mb": 7805.5625,
+    "cpu_count_physical": 10,
+    "cpu_count_logical": 16,
+    "ram_total_gb": 15.317676544189453,
+    "platform": "Linux-6.14.0-37-generic-x86_64-with-glibc2.39",
+    "cpu_brand": "13th Gen Intel(R) Core(TM) i7-13620H"
+  },
+  "feasibility": {},
+  "max_decode_length": {},
+  "latency_sweep": {
+    "helm": {
+      "128": {
+        "backend": "helm",
+        "ablation_tag": "out=128",
+        "n_requests": 10,
+        "n_success": 10,
+        "ttft_p50": 2773.6169894997147,
+        "ttft_p95": 3606.4147829471026,
+        "ttft_p99": 4045.5438949869135,
+        "ttft_mean": 2883.542773899171,
+        "decode_lat_p50": 259.58961932421687,
+        "decode_lat_p95": 272.84942673437484,
+        "decode_lat_p99": 276.35976355938254,
+        "decode_lat_mean": 259.6675409265629,
+        "e2e_p50": 36108.87712300064,
+        "e2e_p95": 38060.49564159766,
+        "e2e_p99": 38349.62200671842,
+        "tok_per_s_mean": 3.5485284329955267,
+        "decode_tok_per_s_mean": 3.8558320312983656,
+        "throughput_req_per_s": 0.0,
+        "throughput_tok_per_s": 0.0,
+        "peak_gpu_mb_mean": 7096.13115234375,
+        "peak_cpu_mb_mean": 9801.18125,
+        "compile_time_s": 58.280050280998694,
+        "stage_plan": "stage0@cpu(21u), stage1@cuda(17u)",
+        "cost_model_decode_ms": 0.0,
+        "cost_model_prefill_ms": 0.0
+      }
+    }
+  },
+  "throughput": {},
+  "ablations": {},
+  "lm_eval": {}
+}

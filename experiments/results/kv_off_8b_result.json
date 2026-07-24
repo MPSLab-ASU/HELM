@@ -1,0 +1,5 @@
+{
+  "kv_off_tok_per_s": 2.7012098633305186,
+  "gpu_layers": 17,
+  "stage_plan": "stage0@cpu(21u), stage1@cuda(17u)"
+}

@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments (incl. the optional research env, see research/README.md)
+.venv/
+.venv-research/
+venv/
+env/
+
+# IDEs and local tool configuration
+.vscode/
+.idea/
+.cursor/
+.cursorrules
+.claude/
+CLAUDE.md
+AGENTS.md
+.DS_Store
+
+# Secrets
+.env
+.env.*
+*.env
+
+# HELM run outputs
+artifacts/
+logs/
+dump/
+checkpoints/
+.helm_profile.json
+*.bak
+*.gguf
+*.tar.gz
+experiments/*.log
+experiments/llama_cpp_src/
+experiments/gguf_local/
+
+# Local paper drafts; the canonical result data in results/paper/ IS tracked
+paper/
+!results/paper/
+
+# Experiment SOURCES are tracked like any other code. Only generated OUTPUTS
+# are ignored: local benchmark runs under experiments/results/, with the
+# committed reference results re-included below. CI enforces that no tracked
+# file matches an ignore rule.
+experiments/results/*
+!experiments/results/HELM_ROUTER_VS_VLLM_p50.md
+!experiments/results/*.json
+!experiments/results/20260316_160248/
+!experiments/results/qwen3_8b_vllm_lmeval/
+!experiments/results/rtx4060_in128_rerun/
+!experiments/results/rtx3090_9900x_repro/

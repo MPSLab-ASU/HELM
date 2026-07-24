@@ -1,0 +1,4 @@
+# RESEARCH ONLY: lm-eval transitively installs vulnerable nltk/sqlitedict.
+# Do not use with untrusted datasets, models, caches, or production credentials.
+lm-eval==0.4.13
+py-cpuinfo

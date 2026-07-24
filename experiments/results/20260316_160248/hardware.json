@@ -1,0 +1,10 @@
+{
+  "cuda_available": true,
+  "gpu_count": 1,
+  "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "gpu_memory_total_gb": 7.62261962890625,
+  "cpu_count": 10,
+  "ram_total_gb": 15.317676544189453,
+  "platform": "Linux-6.14.0-37-generic-x86_64-with-glibc2.39",
+  "cpu_brand": "13th Gen Intel(R) Core(TM) i7-13620H"
+}
